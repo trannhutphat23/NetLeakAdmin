@@ -12,11 +12,11 @@ export const UserContextProvider = ({ children }) => {
 
   const [searchUserText, setSearchUserText] = useState("")
   const [searchDirectorText, setSearchDirectorText] = useState("")
+  const [searchCastText, setSearchCastText] = useState("")
 
   const fetchUser = () => {
     axios.get("http://localhost:8081/v1/api/admin/users")
       .then((res) => {
-        console.log(res.data)
         setUsers(res.data)
       })
       .catch((err) => {
@@ -27,7 +27,6 @@ export const UserContextProvider = ({ children }) => {
   const fetchCast = () => {
     axios.get("http://localhost:8081/v1/api/admin/casts")
       .then((res) => {
-        console.log(res.data)
         setCasts(res.data)
       })
       .catch((err) => {
@@ -58,7 +57,8 @@ export const UserContextProvider = ({ children }) => {
       directors, setDirectors,
       searchUserText, setSearchUserText,
       searchDirectorText, setSearchDirectorText,
-      fetchDirector
+      searchCastText, setSearchCastText,
+      fetchDirector, fetchCast
     }}>
       {children}
     </UserContext.Provider>
