@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css'
 import BeatLoader from "react-spinners/BeatLoader";
 
-const AddActor = () => {
+const AddDirector = () => {
     const {fetchDirector} = useContext(UserContext)
     
     const [images, setImages] = useState([]);
@@ -136,4 +136,4 @@ const AddActor = () => {
     );
 }
 
-export default AddActor;
+export default AddDirector;
