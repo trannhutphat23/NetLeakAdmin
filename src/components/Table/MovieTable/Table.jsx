@@ -20,7 +20,10 @@ const Table = () => {
                             title={item.title}
                             type={item.type}
                             releaseDate={item.released}
-                            lastUpdateDate={item.lastupdated}
+                            lastUpdateDate={item.updatedAt}
+                            genres={item.genres}
+                            cast={item.cast}
+                            directors={item.directors}
                         />
                     })}
                 </div>

@@ -3,8 +3,13 @@ import movie from '../../../assets/movie.jpg'
 import GenreTag from "./GenreTag";
 import ImageTag from "./ImageTag";
 import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../../context/user/userContext";
 
-const TableMovie = ({title, type, releaseDate, lastUpdateDate}) => {
+const TableMovie = ({title, type, releaseDate, lastUpdateDate, genres, cast, directors}) => {
+    const {getGenreById, getDirectorById} = useContext(UserContext)
+    const [genreData, setGenreData] = useState([]);
+    const [directorData, setDirectorData] = useState([]);
     const formatDate = (date) => {
         const originalDate = new Date(date);
     
@@ -16,6 +21,20 @@ const TableMovie = ({title, type, releaseDate, lastUpdateDate}) => {
     }
     releaseDate = formatDate(releaseDate)
     lastUpdateDate = formatDate(lastUpdateDate)
+
+    useEffect(() => {
+        const fetchGenreData = async () => {
+            const newData = await Promise.all(genres.map(item => getGenreById(item)));
+            setGenreData(newData);
+        };
+        const fetchDirectorData = async () => {
+            const newData = await Promise.all(directors.map(item => getDirectorById(item)));
+            setDirectorData(newData);
+        }
+
+        fetchGenreData();
+        fetchDirectorData();
+    }, []);
     return (
         <div className="flex flex-row items-center border-b border-[#0A3379] ">
             <p className="w-1/12 text-center font-bold text-2xl">1</p>
@@ -46,29 +65,34 @@ const TableMovie = ({title, type, releaseDate, lastUpdateDate}) => {
                     <div className="flex flex-row items-center">
                         <p className="w-1/5">Thể loại:</p>
                         <div className="flex flex-row gap-1 flex-wrap">
-                            <GenreTag />
-                            <GenreTag />
+                        {genreData.length!=0 && genreData.map((item, index)=> {
+                            return <GenreTag key={index} title={item.title}/>
+                        })}
                         </div>
                     </div>
                     <div className="flex flex-col mb-3">
                         <p className="w-1/5 mb-1">Diễn viên:</p>
                         <div className="flex flex-row gap-2 flex-wrap">
-                            <ImageTag />
-                            <ImageTag />
-                            <ImageTag />
-                            <ImageTag />
-                            <ImageTag />
+                        {cast.map((item, index)=> {
+                            return <ImageTag 
+                                    key={index}
+                                    avatar={item.avatar}
+                                    name={item.name}
+                                />
+                        })}
                         </div>
                     </div>
 
                     <div className="flex flex-col mb-3">
                         <p className="w-1/5 mb-1">Đội ngũ:</p>
                         <div className="flex flex-row gap-2 flex-wrap">
-                            <ImageTag />
-                            <ImageTag />
-                            <ImageTag />
-                            <ImageTag />
-                            <ImageTag />
+                        {directorData.map((item, index)=>{
+                            return <ImageTag 
+                                    key={index}
+                                    avatar={item.avatar}
+                                    name={item.name}
+                                />
+                        })}
                         </div>
                     </div>
                 </div>

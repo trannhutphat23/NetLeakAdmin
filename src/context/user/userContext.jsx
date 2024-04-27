@@ -47,11 +47,32 @@ export const UserContextProvider = ({ children }) => {
   const fetchMovie = () => {
     axios.get("http://localhost:8081/v1/api/admin/films")
       .then((res) => {
+        console.log("fetch film: ", res.data)
         setMovies(res.data)
       })
       .catch((err) => {
         console.log(err)
       })
+  }
+  const getGenreById = async (id)  => {
+    try {
+      const response = await axios.get(`http://localhost:8081/v1/api/admin/genres/${id}`);
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+  const getDirectorById = async (id)  => {
+    try {
+      const response = await axios.get(`http://localhost:8081/v1/api/admin/studios/${id}`);
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
   useEffect(() => {
     fetchUser()
@@ -69,7 +90,8 @@ export const UserContextProvider = ({ children }) => {
       searchUserText, setSearchUserText,
       searchDirectorText, setSearchDirectorText,
       searchCastText, setSearchCastText,
-      fetchDirector, fetchCast, fetchMovie
+      fetchDirector, fetchCast, fetchMovie,
+      getGenreById, getDirectorById
     }}>
       {children}
     </UserContext.Provider>
