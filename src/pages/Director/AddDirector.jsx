@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../context/user/userContext";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css'
 import BeatLoader from "react-spinners/BeatLoader";
 

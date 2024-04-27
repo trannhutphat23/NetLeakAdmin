@@ -9,6 +9,7 @@ export const UserContextProvider = ({ children }) => {
   const [users, setUsers] = useState([])
   const [casts, setCasts] = useState([])
   const [directors, setDirectors] = useState([])
+  const [movies, setMovies] = useState([])
 
   const [searchUserText, setSearchUserText] = useState("")
   const [searchDirectorText, setSearchDirectorText] = useState("")
@@ -43,11 +44,20 @@ export const UserContextProvider = ({ children }) => {
         console.log(err)
       })
   }
-
+  const fetchMovie = () => {
+    axios.get("http://localhost:8081/v1/api/admin/films")
+      .then((res) => {
+        setMovies(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   useEffect(() => {
     fetchUser()
     fetchCast()
     fetchDirector()
+    fetchMovie()
   }, [])
 
   return (
@@ -55,10 +65,11 @@ export const UserContextProvider = ({ children }) => {
       users, setUsers,
       casts, setCasts,
       directors, setDirectors,
+      movies, setMovies,
       searchUserText, setSearchUserText,
       searchDirectorText, setSearchDirectorText,
       searchCastText, setSearchCastText,
-      fetchDirector, fetchCast
+      fetchDirector, fetchCast, fetchMovie
     }}>
       {children}
     </UserContext.Provider>

@@ -1,6 +1,9 @@
 import TableMovie from './TableMovie';
+import { useContext } from "react";
+import { UserContext } from "../../../context/user/userContext";
 
 const Table = () => {
+    const { movies } = useContext(UserContext)
     return (
         <div className='w-full flex justify-center bg-white rounded-t-lg '>
             <div className='w-full flex flex-col '>
@@ -10,11 +13,16 @@ const Table = () => {
                     <div className='w-1/12'></div>
                 </div>
                 <div className='w-full flex flex-col border border-b-0 border-[#0A3379]'>
-                    <TableMovie />
-                    <TableMovie />
-                    <TableMovie />
-                    <TableMovie />
-                    <TableMovie />
+                    {movies.map((item,index)=> {
+                        console.log(item)
+                        return <TableMovie 
+                            key={index}
+                            title={item.title}
+                            type={item.type}
+                            releaseDate={item.released}
+                            lastUpdateDate={item.lastupdated}
+                        />
+                    })}
                 </div>
             </div>
         </div>

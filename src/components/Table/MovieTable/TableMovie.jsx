@@ -1,10 +1,21 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import movie from '../../../assets/movie.jpg'
 import GenreTag from "./GenreTag";
 import ImageTag from "./ImageTag";
 import { Link } from "react-router-dom";
 
-const TableMovie = () => {
+const TableMovie = ({title, type, releaseDate, lastUpdateDate}) => {
+    const formatDate = (date) => {
+        const originalDate = new Date(date);
+    
+        const day = originalDate.getDate().toString().padStart(2, '0');
+        const month = (originalDate.getMonth() + 1).toString().padStart(2, '0');
+        const year = originalDate.getFullYear();
+    
+        return `${day}/${month}/${year}`;
+    }
+    releaseDate = formatDate(releaseDate)
+    lastUpdateDate = formatDate(lastUpdateDate)
     return (
         <div className="flex flex-row items-center border-b border-[#0A3379] ">
             <p className="w-1/12 text-center font-bold text-2xl">1</p>
@@ -18,19 +29,19 @@ const TableMovie = () => {
                 <div className="w-3/4 flex flex-col gap-1">
                     <div className="flex flex-row items-center">
                         <p className="w-1/5">Tên phim:</p>
-                        <p className="font-bold">Jujutsu Kaisen</p>
+                        <p className="font-bold capitalize">{title}</p>
                     </div>
                     <div className="flex flex-row items-center">
                         <p className="w-1/5">Dòng phim:</p>
-                        <p>Phim bộ</p>
+                        <p className='capitalize'>{type}</p>
                     </div>
                     <div className="flex flex-row items-center">
                         <p className="w-1/5">Ngày ra mắt:</p>
-                        <p>11/11/2021</p>
+                        <p>{releaseDate}</p>
                     </div>
                     <div className="flex flex-row items-center">
                         <p className="w-1/5">Cập nhật:</p>
-                        <p>11/11/2021</p>
+                        <p>{lastUpdateDate}</p>
                     </div>
                     <div className="flex flex-row items-center">
                         <p className="w-1/5">Thể loại:</p>
@@ -67,7 +78,7 @@ const TableMovie = () => {
                     to={"/chi-tiet/ok"}
                     className="w-[50px] h-[50px] cursor-pointer flex items-center justify-center rounded-full hover:bg-[#0A3379] duration-150 east-out group"
                 >
-                    <i class="fa-solid fa-gear text-2xl  text-[#0A3379] group-hover:text-white group-hover:rotate-90 duration-150 east-out"></i>
+                    <i className="fa-solid fa-gear text-2xl  text-[#0A3379] group-hover:text-white group-hover:rotate-90 duration-150 east-out"></i>
                 </Link>
             </div>
         </div>
