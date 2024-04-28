@@ -14,10 +14,9 @@ import AddDirector from './pages/Director/AddDirector'
 import AddMovie from './pages/Movie/AddMovie'
 import MovieDetail from './pages/Movie/MovieDetail'
 import UploadMovie from './pages/Movie/UploadMovie'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 function App() {
-
   const [navSlide, setNavSlide] = useState(true)
   console.log(navSlide)
   return (
@@ -37,7 +36,7 @@ function App() {
               <Route path="/nguoi-dung" element={<User />} />
               <Route path="/phim" element={<Movie />} />
               <Route path="/them-phim" element={<AddMovie />} />
-              <Route path="/chi-tiet/:id" element={<MovieDetail />} />
+              <Route path="/chi-tiet/:id" element={<MovieDetail/>} />
               <Route path="/upload" element={<UploadMovie />} />
               <Route path="/the-loai" element={<Category />} />
               <Route path="/them-the-loai" element={<AddCategory />} />

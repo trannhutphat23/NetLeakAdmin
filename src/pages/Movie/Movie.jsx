@@ -7,10 +7,11 @@ import { BeatLoader } from "react-spinners";
 
 const Movie = () => {
     const { movies } = useContext(UserContext)
+
     return (
         <div className="w-full h-auto flex flex-col items-center justify-center gap-5 bg-[#67718a]">
             <div className="w-full h-full bg-white rounded-xl flex flex-col items-center py-5 gap-5">
-                <Search />
+                <Search/>
             </div>
             <div className="w-full h-auto flex items-end justify-end">
                 <Link

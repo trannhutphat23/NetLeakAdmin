@@ -15,6 +15,13 @@ export const UserContextProvider = ({ children }) => {
   const [searchDirectorText, setSearchDirectorText] = useState("")
   const [searchCastText, setSearchCastText] = useState("")
 
+  //movie search
+  const [searchMovieText, setSearchMovieText] = useState("")
+  const [searchMovieActor, setSearchMovieActor] = useState([])
+  const [searchMovieDirector, setSearchMovieDirector] = useState([])
+  const [searchMovieGenres, setSearchMovieGenres] = useState([])
+  const [searchMovieType, setSearchMovieType] = useState("")
+
   const fetchUser = () => {
     axios.get("http://localhost:8081/v1/api/admin/users")
       .then((res) => {
@@ -54,7 +61,7 @@ export const UserContextProvider = ({ children }) => {
         console.log(err)
       })
   }
-  const getGenreById = async (id)  => {
+  const getGenreById = async (id) => {
     try {
       const response = await axios.get(`http://localhost:8081/v1/api/admin/genres/${id}`);
       console.log(response.data)
@@ -64,7 +71,7 @@ export const UserContextProvider = ({ children }) => {
       return null;
     }
   }
-  const getDirectorById = async (id)  => {
+  const getDirectorById = async (id) => {
     try {
       const response = await axios.get(`http://localhost:8081/v1/api/admin/studios/${id}`);
       console.log(response.data)
@@ -91,7 +98,12 @@ export const UserContextProvider = ({ children }) => {
       searchDirectorText, setSearchDirectorText,
       searchCastText, setSearchCastText,
       fetchDirector, fetchCast, fetchMovie,
-      getGenreById, getDirectorById
+      getGenreById, getDirectorById,
+      searchMovieText, setSearchMovieText,
+      searchMovieActor, setSearchMovieActor,
+      searchMovieDirector, setSearchMovieDirector,
+      searchMovieGenres, setSearchMovieGenres,
+      searchMovieType, setSearchMovieType,
     }}>
       {children}
     </UserContext.Provider>
