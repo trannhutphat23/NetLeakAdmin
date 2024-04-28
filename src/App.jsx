@@ -14,7 +14,7 @@ import AddDirector from './pages/Director/AddDirector'
 import AddMovie from './pages/Movie/AddMovie'
 import MovieDetail from './pages/Movie/MovieDetail'
 import UploadMovie from './pages/Movie/UploadMovie'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 function App() {
   const [navSlide, setNavSlide] = useState(true)

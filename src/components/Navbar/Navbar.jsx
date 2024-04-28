@@ -5,14 +5,49 @@ import NavButton from "../Button/NavButton";
 import logo from "../../assets/N-logo.png";
 import clsx from "clsx";
 import { UserContext } from "../../context/user/userContext";
+import { useLocation } from "react-router-dom"
 
 const Navbar = ({ navSlide }) => {
   const [isSelect, setIsSelect] = useState(1);
   const { setSearchUserText } = useContext(UserContext)
 
+  const location = useLocation();
+
+  useEffect(() => {
+
+    const getRoute = () => {
+      const routeLink = location.pathname.split('/')
+
+      let routeLinkNum = 0
+
+      if (routeLink[1] == 'thong-ke')
+        routeLinkNum = 1
+
+      if (routeLink[1] == 'nguoi-dung')
+        routeLinkNum = 2
+
+      if (routeLink[1] == 'phim')
+        routeLinkNum = 3
+
+      if (routeLink[1] == 'the-loai')
+        routeLinkNum = 4
+
+      if (routeLink[1] == 'dien-vien')
+        routeLinkNum = 5
+
+      if (routeLink[1] == 'doi-ngu')
+        routeLinkNum = 6
+
+      setIsSelect(routeLinkNum)
+    }
+
+    getRoute()
+  }, [])
+
   useEffect(() => {
     setSearchUserText("")
   }, [isSelect])
+
   return (
     <div
       // className="w-1/4 h-screen fixed p-3 border"
@@ -31,7 +66,7 @@ const Navbar = ({ navSlide }) => {
       >
         <div className="w-full h-1/5 flex justify-center items-center duration-200">
           {navSlide ? (
-            <p className="font-bold text-3xl text-[#fc0303]">NETLEAK</p>
+            <p className="font-bold text-3xl text-[#fc0303]">NETFLIX</p>
           ) : (
             <img src={logo} className="w-[50px] h-[50px]" />
           )}

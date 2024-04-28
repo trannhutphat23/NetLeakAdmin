@@ -15,9 +15,10 @@ const StatusBar = ({ onclick }) => {
                     >
                         <i class="fa-solid fa-bars text-2xl text-white group-hover:text-[#0A3379] duration-150"></i>
                     </div>
+                    
                     <Breadcrumb />
                 </div>
-                <div className="w-auto h-[50px] flex flex-row items-center justify-between border-l px-5">
+                {/* <div className="w-auto h-[50px] flex flex-row items-center justify-between border-l px-5">
                     <div className="w-[50px] h-[50px] flex items-center justify-center  rounded-full cursor-pointer ">
                         <i class="fa-solid fa-user text-xl text-white hidden"></i>
                         <img
@@ -32,7 +33,7 @@ const StatusBar = ({ onclick }) => {
                     <div className="w-[30px] h-[30px] flex items-center justify-center hover:bg-white rounded-md cursor-pointer duration-150 group">
                         <i className="fa-solid fa-caret-down text-white text-xl group-hover:text-[#0A3379] duration-150"></i>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

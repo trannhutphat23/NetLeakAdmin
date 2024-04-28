@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import SearchTag from "../../components/Search/MovieSearch/SearchTag";
 import SearchSelect from "../../components/Search/MovieSearch/SearchSelect";
 import ImageTag from "../../components/Table/MovieTable/ImageTag";
@@ -53,7 +53,7 @@ const MovieDetail = () => {
                     setFullplot(movie.fullplot)
                     setGenresFilm(movie.genres)
 
-                    if (movie.ttype) {
+                    if (movie.type) {
                         SelectTypeFilmElement.current.value = movie.type
                         setFilmType(movie.type)
                     }
@@ -69,7 +69,7 @@ const MovieDetail = () => {
                     setDirectorsFilm(movie.directors)
 
                     const date = new Date(movie.released)
-                    setReleased([date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate(), date.getMonth() < 10 ? '0' + date.getMonth().toString() : date.getMonth(), date.getFullYear() < 10 ? '0' + date.getFullYear().toString() : date.getFullYear()].join('-'))
+                    setReleased([date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate(), date.getMonth() < 10 ? '0' + (date.getMonth()+1).toString() : date.getMonth()+1, date.getFullYear() < 10 ? '0' + date.getFullYear().toString() : date.getFullYear()].join('-'))
                 }
             })
         }
@@ -79,8 +79,8 @@ const MovieDetail = () => {
 
 
     const submitImage = (e) => {
-        if (allImages.length != 4) {
-            alert('Vui lòng thêm đủ số lượng ảnh')
+        if (images.length != 4 && images.length != 0) {
+            alert('Vui lòng thêm đủ số lượng ảnh (4 ảnh)')
             return;
         }
 
@@ -89,28 +89,35 @@ const MovieDetail = () => {
             return;
         }
 
-        if (released == '') {
-            alert('Vui lòng thêm ngày xuất bản')
+        if (released != '') {
+            const date = released.split('-')
+
+            let flag = true
+
+            if (date[0].charAt(0) != '0') {
+                if (!date[0].charAt(1))
+                    flag = false
+            }
+
+            if (date[1].charAt(0) != '0') {
+                if (!date[1].charAt(1))
+                    flag = false
+            }
+
+            if (parseInt(date[2]) < 1000)
+                flag = false
+
+            if (!flag) {
+                alert('Vui lòng nhập đúng định dạng ngày')
+                return;
+            }
+        } else {
+            alert('Vui lòng nhập ngày ra mắt')
             return;
         }
 
         if (filmType == '') {
             alert('Vui lòng chọn loại phim')
-            return;
-        }
-
-        if (genresFilm.length == 0) {
-            alert('Vui lòng thêm thể loại')
-            return;
-        }
-
-        if (castsFilm.length == 0) {
-            alert('Vui lòng thêm diễn viên')
-            return;
-        }
-
-        if (directorsFilm.length == 0) {
-            alert('Vui lòng thêm đội ngũ')
             return;
         }
 
@@ -121,7 +128,6 @@ const MovieDetail = () => {
         releaseDay[2] = temp
 
         releaseDay = releaseDay.join('-')
-        console.log(releaseDay)
 
         setIsLoading(true)
         e.preventDefault();
@@ -132,7 +138,6 @@ const MovieDetail = () => {
         }
         formData.append("title", filmName)
         formData.append("fullplot", fullplot)
-        formData.append("plot", '')
         formData.append("released", releaseDay)
         formData.append("type", filmType)
         genresFilm.forEach((film) => {
@@ -168,7 +173,9 @@ const MovieDetail = () => {
                     theme: "light",
                 });
 
-                navigate('/phim')
+                setTimeout(() => {
+                    navigate('/phim')
+                }, 2000)
             })
             .catch((err) => {
                 alert(err)
@@ -261,7 +268,7 @@ const MovieDetail = () => {
                                     </div>
 
                                     <div className="w-full flex flex-row items-center">
-                                        <p className="w-1/4">Ngày xuất bản:</p>
+                                        <p className="w-1/4">Ngày ra mắt:</p>
                                         <input
                                             value={released}
                                             type="text"

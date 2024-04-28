@@ -54,7 +54,6 @@ export const UserContextProvider = ({ children }) => {
   const fetchMovie = () => {
     axios.get("http://localhost:8081/v1/api/admin/films")
       .then((res) => {
-        console.log("fetch film: ", res.data)
         setMovies(res.data)
       })
       .catch((err) => {
@@ -64,7 +63,6 @@ export const UserContextProvider = ({ children }) => {
   const getGenreById = async (id) => {
     try {
       const response = await axios.get(`http://localhost:8081/v1/api/admin/genres/${id}`);
-      console.log(response.data)
       return response.data;
     } catch (error) {
       console.error(error);
@@ -74,7 +72,6 @@ export const UserContextProvider = ({ children }) => {
   const getDirectorById = async (id) => {
     try {
       const response = await axios.get(`http://localhost:8081/v1/api/admin/studios/${id}`);
-      console.log(response.data)
       return response.data;
     } catch (error) {
       console.error(error);

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 import SearchSelect from './SearchSelect';
 import SearchTag from './SearchTag';
 import ImageTag from '../../Table/MovieTable/ImageTag';
@@ -44,6 +44,9 @@ const Search = () => {
         setCastsFilm([])
         setDirectorsFilm([])
         selectFilmTypeElement.current.value = ""
+        setIsSelectStar(false)
+        setIsSelectDirect(false)
+        setIsSelectGenre(false)
     }
 
     return (
@@ -207,11 +210,15 @@ const Search = () => {
                         if (e.target.value == 'series')
                             setSearchMovieType('series')
                         else
-                            setSearchMovieType('movie')
+                            if (e.target.value == 'movie')
+                                setSearchMovieType('movie')
+                            else
+                                if (e.target.value == '')
+                                    setSearchMovieType('')
                     }}
                     ref={selectFilmTypeElement}
                     className='w-[12%] h-[40px] pl-2 rounded-lg border border-[#3e3e3e] focus:ring-[#679cf8] focus:outline-[#679cf8]'>
-                    <option value="" disabled selected>Loại</option>
+                    <option value="">Tất cả</option>
                     <option value="series">Phim bộ</option>
                     <option value="movie">Phim tập</option>
                 </select>

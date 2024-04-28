@@ -54,6 +54,7 @@ const Table = () => {
                                 <div key={index}>
                                     <TableMovie
                                         index={index}
+                                        image={item.image}
                                         title={item.title}
                                         type={item.type}
                                         releaseDate={item.released}

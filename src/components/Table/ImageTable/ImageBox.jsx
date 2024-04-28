@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 const ImageBox = ({castImage, castName, castId, 
     setShowConfirmation,setDeleteCastId, setDeleteCastImage}) => {
     return (

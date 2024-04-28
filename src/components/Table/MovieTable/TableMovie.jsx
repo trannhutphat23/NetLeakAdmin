@@ -7,12 +7,16 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../context/user/userContext";
 import { genreContext } from '../../../context/genre/genreContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+import BeatLoader from "react-spinners/BeatLoader";
 
-const TableMovie = ({ index, id, title, type, releaseDate, lastUpdateDate, genresFilm, castFilm, directorsFilm }) => {
-    const { casts, directors } = useContext(UserContext)
+const TableMovie = ({ index, id, image, title, type, releaseDate, lastUpdateDate, genresFilm, castFilm, directorsFilm }) => {
+    const { casts, directors , fetchMovie} = useContext(UserContext)
     const { genres } = useContext(genreContext)
-    // const [genreData, setGenreData] = useState([]);
-    // const [directorData, setDirectorData] = useState([]);
+    const [showConfirmation, setShowConfirmation] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+
     const formatDate = (date) => {
         const originalDate = new Date(date);
 
@@ -25,112 +29,169 @@ const TableMovie = ({ index, id, title, type, releaseDate, lastUpdateDate, genre
     releaseDate = formatDate(releaseDate)
     lastUpdateDate = formatDate(lastUpdateDate)
 
-    // useEffect(() => {
-    //     const fetchGenreData = async () => {
-    //         const newData = await Promise.all(genres.map(item => getGenreById(item)));
-    //         setGenreData(newData);
-    //         console.log(newData)
-    //     };
-    //     const fetchDirectorData = async () => {
-    //         const newData = await Promise.all(directors.map(item => getDirectorById(item)));
-    //         setDirectorData(newData);
-    //         console.log(newData)
-    //     }
+    const handleDelete = (id) => {
+        setIsLoading(true)
 
-    //     fetchGenreData();
-    //     fetchDirectorData();
-    // }, []);
+        fetch(`http://localhost:8081/v1/api/admin/films?id=${id}`,{
+            method: 'DELETE'
+        })
+            .then(() => {
+                toast.success('Xóa phim thành công', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+
+            })
+            .catch((err) => {
+                alert(err)
+                // setIsLoading(false)
+            })
+            .finally(async () => {
+                await fetchMovie()
+                setIsLoading(false)
+            })
+
+    }
 
     return (
-        <div className="flex flex-row items-center border-b border-[#0A3379] ">
-            <p className="w-1/12 text-center font-bold text-2xl">{index + 1}</p>
-            <div className="w-10/12 border-x border-[#0A3379] p-2 flex flex-row gap-5">
-                <div className="w-1/4 ">
-                    <img
-                        src={movie}
-                        className="w-full rounded-lg"
-                    />
-                </div>
-                <div className="w-3/4 flex flex-col gap-1">
-                    <div className="flex flex-row items-center">
-                        <p className="w-1/5">Tên phim:</p>
-                        <p className="font-bold capitalize">{title}</p>
-                    </div>
-                    <div className="flex flex-row items-center">
-                        <p className="w-1/5">Dòng phim:</p>
-                        <p className='capitalize'>{type == 'series'?'Phim bộ':type == 'movie'?'Phim tập':''}</p>
-                    </div>
-                    <div className="flex flex-row items-center">
-                        <p className="w-1/5">Ngày ra mắt:</p>
-                        <p>{releaseDate}</p>
-                    </div>
-                    <div className="flex flex-row items-center">
-                        <p className="w-1/5">Cập nhật:</p>
-                        <p>{lastUpdateDate}</p>
-                    </div>
+        <>
+            {
+                isLoading == false ?
+                    <div className="flex flex-row items-center border-b border-[#0A3379] ">
+                        <p className="w-1/12 text-center font-bold text-2xl">{index + 1}</p>
+                        <div className="w-10/12 border-x border-[#0A3379] p-2 flex flex-row gap-5">
+                            <div className="w-1/4 ">
+                                <img
+                                    src={image.poster}
+                                    className="w-full rounded-lg"
+                                />
+                            </div>
+                            <div className="w-3/4 flex flex-col gap-1">
+                                <div className="flex flex-row items-center">
+                                    <p className="w-1/5">Tên phim:</p>
+                                    <p className="font-bold capitalize">{title}</p>
+                                </div>
+                                <div className="flex flex-row items-center">
+                                    <p className="w-1/5">Dòng phim:</p>
+                                    <p className='capitalize'>{type == 'series' ? 'Phim bộ' : type == 'movie' ? 'Phim tập' : ''}</p>
+                                </div>
+                                <div className="flex flex-row items-center">
+                                    <p className="w-1/5">Ngày ra mắt:</p>
+                                    <p>{releaseDate}</p>
+                                </div>
+                                <div className="flex flex-row items-center">
+                                    <p className="w-1/5">Cập nhật:</p>
+                                    <p>{lastUpdateDate}</p>
+                                </div>
 
-                    <div className="flex flex-row items-center">
-                        <p className="w-1/5">Thể loại:</p>
-                        <div className="flex flex-row gap-1 flex-wrap">
-                            {/* {genreData.length!=0 && genreData.map((item, index)=> {
+                                <div className="flex flex-row items-center">
+                                    <p className="w-1/5">Thể loại:</p>
+                                    <div className="flex flex-row gap-1 flex-wrap">
+                                        {/* {genreData.length!=0 && genreData.map((item, index)=> {
                             return <GenreTag key={index} title={item.title}/>
                         })} */}
 
-                            {
-                                genres.map((genre, index) => {
-                                    if (genresFilm.some(id => id == genre._id))
-                                        return (
-                                            <div key={index} >
-                                                <SearchTag content={genre.title} />
-                                            </div>
-                                        )
-                                })
-                            }
+                                        {
+                                            genres.map((genre, index) => {
+                                                if (genresFilm.some(id => id == genre._id))
+                                                    return (
+                                                        <div key={index} >
+                                                            <SearchTag content={genre.title} />
+                                                        </div>
+                                                    )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                                <div className="flex flex-col mb-3">
+                                    <p className="w-1/5 mb-1">Diễn viên:</p>
+                                    <div className="flex flex-row gap-2 flex-wrap">
+                                        {
+                                            casts.map((cast, index) => {
+                                                if (castFilm.some(id => id == cast._id))
+                                                    return (
+                                                        <div key={index} >
+                                                            <ImageTag image={cast.avatar} content={cast.name} />
+                                                        </div>
+                                                    )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col mb-3">
+                                    <p className="w-1/5 mb-1">Đội ngũ:</p>
+                                    <div className="flex flex-row gap-2 flex-wrap">
+                                        {
+                                            directors.map((director, index) => {
+                                                if (directorsFilm.some(id => id == director._id))
+                                                    return (
+                                                        <div key={index}
+                                                        >
+                                                            <ImageTag image={director.avatar} content={director.name} />
+                                                        </div>
+                                                    )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="flex flex-col mb-3">
-                        <p className="w-1/5 mb-1">Diễn viên:</p>
-                        <div className="flex flex-row gap-2 flex-wrap">
-                            {
-                                casts.map((cast, index) => {
-                                    if (castFilm.some(id => id == cast._id))
-                                        return (
-                                            <div key={index} >
-                                                <ImageTag image={cast.avatar} content={cast.name} />
-                                            </div>
-                                        )
-                                })
-                            }
+                        <div className='h-full w-1/12 flex items-center flex-col justify-between'>
+                            <Link
+                                to={`/chi-tiet/${id}`}
+                                className="w-[50px] h-[50px] cursor-pointer flex items-center justify-center rounded-full hover:bg-[#0A3379] duration-150 east-out group"
+                            >
+                                <i className="fa-solid fa-gear text-2xl  text-[#0A3379] group-hover:text-white group-hover:animate-spin duration-150 east-out"></i>
+                            </Link>
+
+                            <button
+                                onClick={() => { setShowConfirmation(true) }}
+                                className="mt-[40px] w-[50px] h-[50px] cursor-pointer flex items-center justify-center rounded-full hover:bg-[#0A3379] duration-150 east-out group">
+                                <i class="fa-solid fa-trash text-2xl  text-[#0A3379] group-hover:text-white group-hover:animate-spin duration-150 east-out"></i>
+                            </button>
                         </div>
+
+                        <ToastContainer />
+                        {showConfirmation && (
+                            <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+                                <div className="bg-white p-5 rounded shadow-lg">
+                                    <p>Bạn có chắc chắn muốn xóa không?</p>
+                                    <div className="flex justify-end mt-4">
+                                        <button
+                                            onClick={() => setShowConfirmation(false)}
+                                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 mr-2 rounded"
+                                        >
+                                            Hủy
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                handleDelete(id)
+                                                setShowConfirmation(false)
+
+                                            }}
+                                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                        >
+                                            Xóa
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
-                    <div className="flex flex-col mb-3">
-                        <p className="w-1/5 mb-1">Đội ngũ:</p>
-                        <div className="flex flex-row gap-2 flex-wrap">
-                            {
-                                directors.map((director, index) => {
-                                    if (directorsFilm.some(id => id == director._id))
-                                        return (
-                                            <div key={index}
-                                            >
-                                                <ImageTag image={director.avatar} content={director.name} />
-                                            </div>
-                                        )
-                                })
-                            }
-                        </div>
+                    :
+                    <div className='flex justify-center'>
+                    <BeatLoader color="#36d7b7" />
                     </div>
-                </div>
-            </div>
-            <div className='w-1/12 flex items-center justify-center'>
-                <Link
-                    to={`/chi-tiet/${id}`}
-                    className="w-[50px] h-[50px] cursor-pointer flex items-center justify-center rounded-full hover:bg-[#0A3379] duration-150 east-out group"
-                >
-                    <i className="fa-solid fa-gear text-2xl  text-[#0A3379] group-hover:text-white group-hover:rotate-90 duration-150 east-out"></i>
-                </Link>
-            </div>
-        </div>
+            }
+        </>
     );
 }
 
