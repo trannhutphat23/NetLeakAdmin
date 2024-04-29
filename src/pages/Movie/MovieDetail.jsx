@@ -90,27 +90,39 @@ const MovieDetail = () => {
         }
 
         if (released != '') {
-            const date = released.split('-')
-
-            let flag = true
-
-            if (date[0].charAt(0) != '0') {
-                if (!date[0].charAt(1))
-                    flag = false
-            }
-
-            if (date[1].charAt(0) != '0') {
-                if (!date[1].charAt(1))
-                    flag = false
-            }
-
-            if (parseInt(date[2]) < 1000)
-                flag = false
-
-            if (!flag) {
+            console.log(released)
+            if (!released.match(/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$/))
+            {
                 alert('Vui lòng nhập đúng định dạng ngày')
                 return;
             }
+            var releaseDay = released.split('-')
+            var temp = releaseDay[0]
+            releaseDay[0] = releaseDay[2]
+            releaseDay[2] = temp
+    
+            releaseDay = releaseDay.join('-')
+            // const date = released.split('-')
+
+            // let flag = true
+
+            // if (date[0].charAt(0) != '0') {
+            //     if (!date[0].charAt(1))
+            //         flag = false
+            // }
+
+            // if (date[1].charAt(0) != '0') {
+            //     if (!date[1].charAt(1))
+            //         flag = false
+            // }
+
+            // if (parseInt(date[2]) < 1000)
+            //     flag = false
+
+            // if (!flag) {
+            //     alert('Vui lòng nhập đúng định dạng ngày')
+            //     return;
+            // }
         } else {
             alert('Vui lòng nhập ngày ra mắt')
             return;
@@ -121,13 +133,8 @@ const MovieDetail = () => {
             return;
         }
 
-
-        let releaseDay = released.split('-')
-        let temp = releaseDay[0]
-        releaseDay[0] = releaseDay[2]
-        releaseDay[2] = temp
-
-        releaseDay = releaseDay.join('-')
+        
+        
 
         setIsLoading(true)
         e.preventDefault();

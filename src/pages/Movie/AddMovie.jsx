@@ -37,8 +37,8 @@ const AddMovie = () => {
 
 
     const submitImage = (e) => {
-        if (images.length != 4 && images.length != 0) {
-            alert('Vui lòng thêm đủ số lượng ảnh (4 ảnh)')
+        if (images.length != 2 && images.length != 0) {
+            alert('Vui lòng thêm đủ số lượng ảnh (2 ảnh)')
             return;
         }
 
