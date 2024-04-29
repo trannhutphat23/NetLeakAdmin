@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SearchTag from "../../components/Search/MovieSearch/SearchTag";
 import SearchSelect from "../../components/Search/MovieSearch/SearchSelect";
 import ImageTag from "../../components/Table/MovieTable/ImageTag";
@@ -13,11 +13,13 @@ import axios from "axios";
 const AddVideo = () => {
 
     const navigate = useNavigate()
-    const { movies, casts, directors, fetchMovie } = useContext(UserContext)
+    const { movies, fetchMovie } = useContext(UserContext)
 
     const [isSelectFilm, setIsSelectFilm] = useState(false)
 
     const [isLoading, setIsLoading] = useState(false)
+
+    const [isMovie, setIsMovie] = useState(false)
 
     const [movieSearch, setMovieSearch] = useState('')
     const [episodeInputText, setEpisodeInputText] = useState('')
@@ -26,14 +28,7 @@ const AddVideo = () => {
     const [movieFilm, setMovieFilm] = useState('')
 
     const handleSubmit = () => {
-        console.log(movieFilm)
-        if (parseInt(episodeInputText) < 0) {
-            alert('Vui lòng nhập đúng số tập')
-            return;
-        }
-
-        if(videoLink == '')
-        {
+        if (videoLink == '') {
             alert('Vui lòng nhập link video')
             return;
         }
@@ -43,7 +38,7 @@ const AddVideo = () => {
         const formData = new FormData();
         formData.append("filmId", movieFilm)
         formData.append("videoLink", videoLink)
-        formData.append("chapter", episodeInputText)
+        formData.append("chapter", episodeInputText==''?0:episodeInputText)
 
         axios.post(
             'http://localhost:8081/v1/api/admin/videos'
@@ -82,9 +77,21 @@ const AddVideo = () => {
             })
     }
 
+    useEffect(() => {
+        movies.forEach(movie => {
+            if (movie._id == movieFilm) {
+                if (movie.type == 'movie') {
+                    setIsMovie(true)
+                }
+                else
+                setIsMovie(false)
+            }
+        });
+    }, [movieFilm])
+
     return (
         <>
-            {isLoading==false ?
+            {isLoading == false ?
                 <div className="w-full h-auto flex flex-col items-center justify-center gap-5 px-5 pb-5 ">
                     <div className="w-full h-full bg-slate-300 rounded-xl flex flex-col items-center py-10 gap-5">
 
@@ -106,7 +113,7 @@ const AddVideo = () => {
                                         {movies.map((movie, index) => {
                                             if (
                                                 (movie.title.toLowerCase().includes(movieSearch.toLowerCase().trim()) ||
-                                                movieSearch == '') && movie.type != 'movie'
+                                                    movieSearch == '')
                                             ) {
                                                 return (
                                                     <div key={index} onClick={() => {
@@ -137,7 +144,6 @@ const AddVideo = () => {
                         <div className="w-3/4 flex flex-row flex-wrap gap-2 mb-[30px] justify-center">
                             {
                                 movies.map((movie, index) => {
-                                    console.log(movieFilm)
                                     if (movie._id == movieFilm)
                                         return (
                                             <div className='hover:cursor-pointer' key={index} onClick={() => {
@@ -151,13 +157,15 @@ const AddVideo = () => {
                             }
                         </div>
 
-                        <input
-                            value={episodeInputText}
-                            type='text'
-                            placeholder='Nhập chỉ số tập '
-                            className="w-3/4 h-[50px] pl-2 rounded-lg border border-[#3e3e3e] focus:ring-[#679cf8] focus:outline-[#679cf8]"
-                            onChange={(e) => setEpisodeInputText(e.target.value)}
-                        />
+                        {!isMovie &&
+                            <input
+                                value={episodeInputText}
+                                type='text'
+                                placeholder='Nhập chỉ số tập '
+                                className="w-3/4 h-[50px] pl-2 rounded-lg border border-[#3e3e3e] focus:ring-[#679cf8] focus:outline-[#679cf8]"
+                                onChange={(e) => setEpisodeInputText(e.target.value)}
+                            />
+                        }
 
                         <input
                             value={videoLink}

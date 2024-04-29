@@ -6,8 +6,6 @@ import axios from "axios";
 import BeatLoader from "react-spinners/BeatLoader";
 
 const Table = ({ id }) => {
-    const { users, searchUserText } = useContext(UserContext)
-
     const [videoList, setVideoList] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
@@ -17,17 +15,20 @@ const Table = ({ id }) => {
         fetch(`http://localhost:8081/v1/api/admin/videos/${id}`)
             .then((res) => res.json())
             .then((data) => {
-                for (let i = 0; i < data.length - 1; i++) {
-                    for (let j = i + 1; j < data.length; j++) {
-                        if (data[i].chapter > data[j].chapter) {
-                            let temp = data[i]
-                            data[i] = data[j]
-                            data[j] = temp
+                if(data.success != false){
+                    for (let i = 0; i < data.length - 1; i++) {
+                        for (let j = i + 1; j < data.length; j++) {
+                            if (data[i].chapter > data[j].chapter) {
+                                let temp = data[i]
+                                data[i] = data[j]
+                                data[j] = temp
+                            }
                         }
                     }
+    
+                    setVideoList(data)
                 }
 
-                setVideoList(data)
             })
             .catch((err) => {
                 alert(err)
@@ -73,7 +74,6 @@ const Table = ({ id }) => {
                 getEpisodeMovie()
             })
     }
-
     return (
         <>
             {
@@ -87,7 +87,7 @@ const Table = ({ id }) => {
                                 <div className="p-3 w-full">
                                     <div className="overflow-x-auto w-full">
                                         <table className="w-full">
-                                            <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                                            <thead className="text-xs font-semibold uppercase text-gray-400 ">
                                                 <tr>
                                                     <th className="p-2 whitespace-nowrap">
                                                         <div className="font-semibold text-left">Số tập</div>
@@ -105,26 +105,27 @@ const Table = ({ id }) => {
                                             </thead>
                                             <tbody className="w-full text-sm divide-y divide-gray-100">
                                                 {
-                                                    videoList.map((episode, index) => (
+                                                    videoList.length != 0?videoList.map((episode, index) => (
                                                         <tr key={index} className="">
                                                             <td className="p-2 whitespace-nowrap">
-                                                                <div className="  text-left font-medium text-green-500">{episode.chapter}</div>
+                                                                <div className="  text-left font-medium text-green-500">{episode.chapter==0?'':episode.chapter}</div>
                                                             </td>
                                                             <td className="p-2 whitespace-nowrap max-w-[500px] overflow-hidden">
                                                                 <div className="text-lg text-left">{episode.videoLink}</div>
                                                                 {/* <div className="text-left font-medium text-green-500">{episode.videoLink}</div> */}
                                                             </td>
 
-                                                            <tr>
+                                                            <td>
                                                                 <button
                                                                     onClick={() => { handleDelete(episode._id) }}
                                                                     className="group">
-                                                                    <i class="fa-solid fa-trash text-2xl  text-[#0A3379] group-hover:brightness-[1.5] duration-150 east-out mr-2 ml-8"></i>
+                                                                    <i class="fa-solid fa-trash text-2xl  text-[#0A3379] group-hover:opacity-[0.5] duration-150 east-out mr-2 ml-8"></i>
                                                                 </button>
-                                                            </tr>
+                                                            </td>
 
                                                         </tr>
-                                                    ))
+                                                    )):
+                                                    <></>
                                                 }
 
                                             </tbody>

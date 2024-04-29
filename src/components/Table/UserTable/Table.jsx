@@ -50,7 +50,7 @@ const Table = () => {
                                                         <div className="text-left">{ele.email}</div>
                                                     </td>
                                                     <td className="p-2 whitespace-nowrap">
-                                                        <div className="text-left font-medium text-green-500">{ele.sexuality}</div>
+                                                        <div className="text-left font-medium text-green-500">{ele.sexuality=='male'?'Nam':'Nữ'}</div>
                                                     </td>
                                                     <td className="p-2 whitespace-nowrap">
                                                         <div className="text-lg text-center">{ele.phone}</div>
