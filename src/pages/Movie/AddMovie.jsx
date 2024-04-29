@@ -37,8 +37,8 @@ const AddMovie = () => {
 
 
     const submitImage = (e) => {
-        if (images.length != 4 && images.length != 0) {
-            alert('Vui lòng thêm đủ số lượng ảnh (4 ảnh)')
+        if (images.length != 2 && images.length != 0) {
+            alert('Vui lòng thêm đủ số lượng ảnh (2 ảnh)')
             return;
         }
 
@@ -48,28 +48,13 @@ const AddMovie = () => {
         }
 
         if (released != '') {
-            const date = released.split('-')
-
-            let flag = true
-            if (date[0].charAt(0) != '0') {
-                if (!date[0].charAt(1))
-                    flag = false
-            }
-
-            if (date[1].charAt(0) != '0') {
-                if (!date[1].charAt(1))
-                    flag = false
-            }
-
-            if (parseInt(date[2]) < 1000)
-                flag = false
-
-            if (!flag) {
+            if (!released.match(/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$/))
+            {
                 alert('Vui lòng nhập đúng định dạng ngày')
                 return;
             }
         } else {
-            alert('Vui lòng nhập ngày xuất bản')
+            alert('Vui lòng nhập ngày ra mắt')
             return;
         }
 

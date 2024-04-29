@@ -105,8 +105,8 @@ const Dashboard = () => {
     }, [])
     return (
         <div className="w-full h-auto flex flex-col items-center justify-center px-5 pb-5 bg-white rounded pt-5">
-            <form className="max-w-sm mx-auto">
-                <select id="countries" onChange={handleChange} className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <form className=" max-w-sm mx-auto">
+                <select id="countries" onChange={handleChange} className="  bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="" disabled selected>Năm</option>
                     {yearArr.length!=0 && yearArr.map((item, index)=> {
                         return <option key={index} value={item.year}>{item.year}</option>
