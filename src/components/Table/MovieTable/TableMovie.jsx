@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import BeatLoader from "react-spinners/BeatLoader";
 
 const TableMovie = ({ index, id, image, title, type, releaseDate, lastUpdateDate, genresFilm, castFilm, directorsFilm }) => {
-    const { casts, directors , fetchMovie} = useContext(UserContext)
+    const { casts, directors, fetchMovie } = useContext(UserContext)
     const { genres } = useContext(genreContext)
     const [showConfirmation, setShowConfirmation] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
@@ -32,7 +32,7 @@ const TableMovie = ({ index, id, image, title, type, releaseDate, lastUpdateDate
     const handleDelete = (id) => {
         setIsLoading(true)
 
-        fetch(`http://localhost:8081/v1/api/admin/films?id=${id}`,{
+        fetch(`http://localhost:8081/v1/api/admin/films?id=${id}`, {
             method: 'DELETE'
         })
             .then(() => {
@@ -145,17 +145,24 @@ const TableMovie = ({ index, id, image, title, type, releaseDate, lastUpdateDate
                         </div>
                         <div className='h-full w-1/12 flex items-center flex-col justify-between'>
                             <Link
+                                to={`/danh-sach-tap/${id}`}
+                                className="mb-[40px] w-[50px] h-[50px] cursor-pointer flex items-center justify-center rounded-full hover:bg-[#0A3379] duration-150 east-out group">
+                                <i class="fa-solid fa-bars text-2xl  text-[#0A3379] group-hover:text-white duration-150 east-out"></i>
+                            </Link>
+
+                            <Link
                                 to={`/chi-tiet/${id}`}
                                 className="w-[50px] h-[50px] cursor-pointer flex items-center justify-center rounded-full hover:bg-[#0A3379] duration-150 east-out group"
                             >
-                                <i className="fa-solid fa-gear text-2xl  text-[#0A3379] group-hover:text-white group-hover:animate-spin duration-150 east-out"></i>
+                                <i className="fa-solid fa-gear text-2xl  text-[#0A3379] group-hover:text-white duration-150 east-out"></i>
                             </Link>
 
                             <button
                                 onClick={() => { setShowConfirmation(true) }}
                                 className="mt-[40px] w-[50px] h-[50px] cursor-pointer flex items-center justify-center rounded-full hover:bg-[#0A3379] duration-150 east-out group">
-                                <i class="fa-solid fa-trash text-2xl  text-[#0A3379] group-hover:text-white group-hover:animate-spin duration-150 east-out"></i>
+                                <i class="fa-solid fa-trash text-2xl  text-[#0A3379] group-hover:text-white duration-150 east-out"></i>
                             </button>
+
                         </div>
 
                         <ToastContainer />
@@ -188,7 +195,7 @@ const TableMovie = ({ index, id, image, title, type, releaseDate, lastUpdateDate
 
                     :
                     <div className='flex justify-center'>
-                    <BeatLoader color="#36d7b7" />
+                        <BeatLoader color="#36d7b7" />
                     </div>
             }
         </>

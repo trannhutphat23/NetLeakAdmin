@@ -14,6 +14,8 @@ import AddDirector from './pages/Director/AddDirector'
 import AddMovie from './pages/Movie/AddMovie'
 import MovieDetail from './pages/Movie/MovieDetail'
 import UploadMovie from './pages/Movie/UploadMovie'
+import AddVideo from './pages/Movie/AddVideo'
+import DetailVideoMovie from './pages/Movie/DetailVideoMovie'
 import { useState } from 'react'
 
 function App() {
@@ -37,6 +39,8 @@ function App() {
               <Route path="/phim" element={<Movie />} />
               <Route path="/them-phim" element={<AddMovie />} />
               <Route path="/chi-tiet/:id" element={<MovieDetail/>} />
+              <Route path="/them-video" element={<AddVideo />} />
+              <Route path="/danh-sach-tap/:id" element={<DetailVideoMovie/>} />
               <Route path="/upload" element={<UploadMovie />} />
               <Route path="/the-loai" element={<Category />} />
               <Route path="/them-the-loai" element={<AddCategory />} />

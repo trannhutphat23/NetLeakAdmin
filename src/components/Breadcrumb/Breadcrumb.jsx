@@ -59,6 +59,14 @@ const Breadcrumb = () => {
                     routeLinkName = 'Thêm phim'
                 }
 
+                if (routeLink[1] == 'them-video'){
+                    routeLinkName = 'Thêm video'
+                }
+
+                if (routeLink[1] == 'danh-sach-tap'){
+                    routeLinkName = 'Danh sách tập'
+                }
+
                 setDadRoute(routeLinkName)
             }
         }

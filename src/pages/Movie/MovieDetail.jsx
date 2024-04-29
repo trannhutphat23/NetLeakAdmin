@@ -46,7 +46,7 @@ const MovieDetail = () => {
                 if (movie._id == id) {
 
                     if (movie.image.img && movie.image.poster && movie.image.banner) {
-                        setAllImages([movie.image.poster, movie.image.banner, movie.image.img[0], movie.image.img[1]])
+                        setAllImages([movie.image.poster, movie.image.banner])
                     }
 
                     setFilmName(movie.title)
@@ -69,7 +69,7 @@ const MovieDetail = () => {
                     setDirectorsFilm(movie.directors)
 
                     const date = new Date(movie.released)
-                    setReleased([date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate(), date.getMonth() < 10 ? '0' + (date.getMonth()+1).toString() : date.getMonth()+1, date.getFullYear() < 10 ? '0' + date.getFullYear().toString() : date.getFullYear()].join('-'))
+                    setReleased([date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate(), date.getMonth() < 9 ? '0' + (date.getMonth() + 1).toString() : date.getMonth() + 1, date.getFullYear() < 10 ? '0' + date.getFullYear().toString() : date.getFullYear()].join('-'))
                 }
             })
         }
@@ -90,8 +90,7 @@ const MovieDetail = () => {
         }
 
         if (released != '') {
-            if (!released.match(/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$/))
-            {
+            if (!released.match(/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$/)) {
                 alert('Vui lòng nhập đúng định dạng ngày')
                 return;
             }
@@ -118,6 +117,7 @@ const MovieDetail = () => {
         e.preventDefault();
 
         const formData = new FormData();
+
         for (let i = 0; i < images.length; i++) {
             formData.append("filmImg", images[i]);
         }

@@ -12,7 +12,7 @@ const Table = () => {
     const { genres } = useContext(genreContext)
 
     const handleCheckSearch = (movie) => {
-        if (!movie.title.includes(searchMovieText.trim()))
+        if (!movie.title.toLowerCase().includes(searchMovieText.toLowerCase().trim()))
             return false
 
         if (!(searchMovieType == movie.type || searchMovieType == ''))
