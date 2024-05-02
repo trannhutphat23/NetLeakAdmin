@@ -51,7 +51,11 @@ const MovieDetail = () => {
 
                     setFilmName(movie.title)
                     setFullplot(movie.fullplot)
-                    setGenresFilm(movie.genres)
+                    const genresTemp = movie.genres.map(genre => {
+                        return genre._id
+                    })
+                    // setGenresFilm(movie.genres)
+                    setGenresFilm(genresTemp)
 
                     if (movie.type) {
                         SelectTypeFilmElement.current.value = movie.type
@@ -67,6 +71,11 @@ const MovieDetail = () => {
                     })
 
                     setDirectorsFilm(movie.directors)
+
+                    const directorsTemp = movie.directors.map(director => {
+                        return director._id
+                    })
+                    setDirectorsFilm(directorsTemp)
 
                     const date = new Date(movie.released)
                     setReleased([date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate(), date.getMonth() < 9 ? '0' + (date.getMonth() + 1).toString() : date.getMonth() + 1, date.getFullYear() < 10 ? '0' + date.getFullYear().toString() : date.getFullYear()].join('-'))
@@ -342,6 +351,17 @@ const MovieDetail = () => {
                                                         </div>
                                                     )
                                             })
+
+                                            // genresFilm.map((genre, index) => {
+                                            //     return (
+                                            //         <div className=" hover:cursor-pointer" key={index} onClick={() => {
+                                            //             const updatedGenresFilm = genresFilm.filter(id => id != genre._id)
+                                            //             setGenresFilm(updatedGenresFilm)
+                                            //         }}>
+                                            //             <SearchTag content={genre.title} />
+                                            //         </div>
+                                            //     )
+                                            // })
                                         }
                                     </div>
 
@@ -408,6 +428,7 @@ const MovieDetail = () => {
                                                         </div>
                                                     )
                                             })
+
                                         }
                                     </div>
 
@@ -474,6 +495,18 @@ const MovieDetail = () => {
                                                         </div>
                                                     )
                                             })
+
+                                            // directorsFilm.map((director, index) => {
+                                            //     return (
+                                            //         <div className='hover:cursor-pointer' key={index} onClick={() => {
+                                            //             const updateddirectorFilm = directorsFilm.filter(id => id != director._id)
+                                            //             setDirectorsFilm(updateddirectorFilm)
+                                            //         }}
+                                            //         >
+                                            //             <ImageTag image={director.avatar} content={director.name} />
+                                            //         </div>
+                                            //     )
+                                            // })
                                         }
                                     </div>
 
