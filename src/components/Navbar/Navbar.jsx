@@ -66,7 +66,7 @@ const Navbar = ({ navSlide }) => {
       >
         <div className="w-full h-1/5 flex justify-center items-center duration-200">
           {navSlide ? (
-            <p className="font-bold text-3xl text-[#fc0303]">NETFLIX</p>
+            <p className="font-bold text-3xl text-[#fc0303]">NETLEAK</p>
           ) : (
             <img src={logo} className="w-[50px] h-[50px]" />
           )}

@@ -97,7 +97,7 @@ const TableMovie = ({ index, id, image, title, type, releaseDate, lastUpdateDate
                             return <GenreTag key={index} title={item.title}/>
                         })} */}
 
-                                        {
+                                        {/* {
                                             genres.map((genre, index) => {
                                                 if (genresFilm.some(id => id == genre._id))
                                                     return (
@@ -106,7 +106,15 @@ const TableMovie = ({ index, id, image, title, type, releaseDate, lastUpdateDate
                                                         </div>
                                                     )
                                             })
-                                        }
+                                        } */}
+
+                                        {genresFilm.map(genre => {
+                                            return (
+                                                <div key={index} >
+                                                    <SearchTag content={genre.title} />
+                                                </div>
+                                            )
+                                        })}
                                     </div>
                                 </div>
                                 <div className="flex flex-col mb-3">
@@ -128,7 +136,7 @@ const TableMovie = ({ index, id, image, title, type, releaseDate, lastUpdateDate
                                 <div className="flex flex-col mb-3">
                                     <p className="w-1/5 mb-1">Đội ngũ:</p>
                                     <div className="flex flex-row gap-2 flex-wrap">
-                                        {
+                                        {/* {
                                             directors.map((director, index) => {
                                                 if (directorsFilm.some(id => id == director._id))
                                                     return (
@@ -138,7 +146,16 @@ const TableMovie = ({ index, id, image, title, type, releaseDate, lastUpdateDate
                                                         </div>
                                                     )
                                             })
-                                        }
+                                        } */}
+
+                                        {directorsFilm.map(director => {
+                                             return (
+                                                <div key={index}
+                                                >
+                                                    <ImageTag image={director.avatar} content={director.name} />
+                                                </div>
+                                            )
+                                        })}
                                     </div>
                                 </div>
                             </div>

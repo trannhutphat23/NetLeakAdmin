@@ -25,7 +25,7 @@ const Table = ({ id }) => {
                             }
                         }
                     }
-    
+                    console.log(data)
                     setVideoList(data)
                 }
 
